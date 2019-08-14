@@ -1,0 +1,6 @@
+INSERT IGNORE INTO `s_article_configurator_templates` (`id`, `article_id`, `order_number`, `suppliernumber`, `additionaltext`, `impressions`, `sales`, `active`, `instock`, `stockmin`, `laststock`, `weight`, `position`, `width`, `height`, `length`, `ean`, `unit_id`, `purchasesteps`, `maxpurchase`, `minpurchase`, `purchaseunit`, `referenceunit`, `packunit`, `releasedate`, `shippingfree`, `shippingtime`, `purchaseprice`) VALUES
+('1', '5', 'SW10005', '', '', '0', '0', '1', '50', '5', '0', '0.500', '0', NULL, NULL, NULL, '', '9', NULL, NULL, '1', '1.0000', '1.000', '', NULL, '0', '', '0'),
+('2', '7', 'SW10007', '', '', '0', '0', '1', '50', '5', '0', '0.000', '0', NULL, NULL, NULL, '', '9', NULL, NULL, '1', '1.0000', '1.000', '', NULL, '0', '', '0'),
+('3', '9', 'SW10009', '', '', '0', '0', '1', '75', '5', '0', '0.550', '0', NULL, NULL, NULL, '', '9', NULL, NULL, '1', '1.0000', '1.000', '', NULL, '0', '', '0'),
+('4', '4', 'SW10004', '', '', '0', '0', '1', '10', '0', '0', '0.000', '0', NULL, NULL, NULL, '', '9', NULL, NULL, '1', '1.0000', '1.000', '', NULL, '0', '', '0'),
+('5', '14', 'SW10014', '', '', '0', '0', '1', '100', '10', '0', '0.000', '0', NULL, NULL, NULL, '', '9', NULL, NULL, '1', '1.0000', '1.000', '', NULL, '0', '', '0');
