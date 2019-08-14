@@ -19,13 +19,32 @@ class Shopware_Plugins_Frontend_SwagDemoDataEN_Bootstrap extends Shopware_Compon
         }
 
         try {
-            $this->importMedia();
-            $this->importDatabase();
+            if ($this->isInstallAllowed()) {
+                $this->importMedia();
+                $this->importDatabase();
+            }
         } catch (Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
 
         return true;
+    }
+
+    private function isInstallAllowed()
+    {
+        if (PHP_SAPI === 'cli') {
+            return true;
+        }
+
+        $session = $this->get('backendsession');
+        if ($session->offsetExists('updateException')) {
+            $session->offsetUnset('updateException');
+
+            return true;
+        }
+
+        $session->offsetSet('updateException', true);
+        throw new RuntimeException('All your data will be lost after the installation. Please start the installation again to confirm these changes.');
     }
 
     /**
