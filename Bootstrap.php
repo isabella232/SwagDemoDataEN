@@ -4,12 +4,12 @@ class Shopware_Plugins_Frontend_SwagDemoDataEN_Bootstrap extends Shopware_Compon
 {
     public function getCapabilities()
     {
-        return array(
+        return [
             'install' => true,
             'update' => true,
             'enable' => true,
             'secureUninstall' => false
-        );
+        ];
     }
 
     public function install()
@@ -30,7 +30,7 @@ class Shopware_Plugins_Frontend_SwagDemoDataEN_Bootstrap extends Shopware_Compon
         return true;
     }
 
-    private function isInstallAllowed()
+    private function isInstallAllowed(): bool
     {
         if (PHP_SAPI === 'cli') {
             return true;
@@ -65,22 +65,22 @@ class Shopware_Plugins_Frontend_SwagDemoDataEN_Bootstrap extends Shopware_Compon
      */
     public function getVersion()
     {
-        $info = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR .'plugin.json'), true);
+        $info = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'plugin.json'), true);
         if ($info) {
             return $info['currentVersion'];
-        } else {
-            throw new Exception('The plugin has an invalid version file.');
         }
+
+        throw new Exception('The plugin has an invalid version file.');
     }
 
-    private function importMedia()
+    private function importMedia(): void
     {
         $rootDir = Shopware()->Container()->getParameter('kernel.root_dir');
-        if (Shopware()->Container()->hasParameter('shopware.app.rootdir')) {
-            $rootDir = Shopware()->Container()->getParameter('shopware.app.rootdir');
+        if (Shopware()->Container()->hasParameter('shopware.app.rootDir')) {
+            $rootDir = Shopware()->Container()->getParameter('shopware.app.rootDir');
         }
 
-        $source      = __DIR__ . '/resources/media';
+        $source = __DIR__ . '/resources/media';
         $destination = $rootDir . '/media';
 
         $iterator = new RecursiveIteratorIterator(
@@ -100,12 +100,12 @@ class Shopware_Plugins_Frontend_SwagDemoDataEN_Bootstrap extends Shopware_Compon
     /**
      * Imports demo data scripts into the database
      *
+     * @return void
      * @throws \Exception
-     * @return array
      */
-    private function importDatabase()
+    private function importDatabase(): void
     {
-        /**@var $connection \Doctrine\DBAL\Connection*/
+        /** @var $connection \Doctrine\DBAL\Connection */
         $connection = $this->get('dbal_connection');
 
         $dataPaths = $this->getDataFilesList();
@@ -116,7 +116,8 @@ class Shopware_Plugins_Frontend_SwagDemoDataEN_Bootstrap extends Shopware_Compon
                 $sql = file_get_contents($dataFile);
                 $connection->executeUpdate($sql);
             }
-        } catch (\Exception $exception) {}
+        } catch (\Exception $exception) {
+        }
 
         $connection->executeUpdate('SET FOREIGN_KEY_CHECKS = 1;');
 
@@ -130,7 +131,7 @@ class Shopware_Plugins_Frontend_SwagDemoDataEN_Bootstrap extends Shopware_Compon
      *
      * @return array
      */
-    private function getDataFilesList()
+    private function getDataFilesList(): array
     {
         $regexPattern = '/^([0-9]*)-.+\.sql/i';
 
@@ -139,7 +140,7 @@ class Shopware_Plugins_Frontend_SwagDemoDataEN_Bootstrap extends Shopware_Compon
         $directoryIterator = new \DirectoryIterator($dataPath);
         $regex = new \RegexIterator($directoryIterator, $regexPattern, \RecursiveRegexIterator::GET_MATCH);
 
-        $dataPaths = array();
+        $dataPaths = [];
 
         foreach ($regex as $result) {
             $dataPriority = intval($result['1']);
