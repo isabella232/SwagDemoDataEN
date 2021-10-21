@@ -76,6 +76,9 @@ class Shopware_Plugins_Frontend_SwagDemoDataEN_Bootstrap extends Shopware_Compon
     private function importMedia(): void
     {
         $rootDir = Shopware()->Container()->getParameter('kernel.root_dir');
+        if (Shopware()->Container()->hasParameter('shopware.app.rootdir')) {
+            $rootDir = Shopware()->Container()->getParameter('shopware.app.rootdir');
+        }
         if (Shopware()->Container()->hasParameter('shopware.app.rootDir')) {
             $rootDir = Shopware()->Container()->getParameter('shopware.app.rootDir');
         }
